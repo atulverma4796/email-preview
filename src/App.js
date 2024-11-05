@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react"
+import InputPanel from "./components/InputPanel"
+import PreviewPanel from "./components/PreviewPanel"
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container maxWidth="md" sx={{ paddingY: 4 }}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <InputPanel />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <PreviewPanel />
+        </Grid>
+      </Grid>
+    </Container>
+  )
 }
 
-export default App;
+export default App
