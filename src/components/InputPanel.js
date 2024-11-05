@@ -37,10 +37,11 @@ function InputPanel() {
             ),
           }}
         />
+        <Button variant="outlined" sx={{ whiteSpace: "nowrap" }}>
+          Use AI
+        </Button>
       </Box>
-      <Button variant="outlined" sx={{ whiteSpace: "nowrap" }}>
-        Use AI
-      </Button>
+
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <TextField
           label="Subject Line 2"
@@ -58,10 +59,11 @@ function InputPanel() {
             ),
           }}
         />
+        <Button variant="outlined" sx={{ whiteSpace: "nowrap" }}>
+          Use AI
+        </Button>
       </Box>
-      <Button variant="outlined" sx={{ whiteSpace: "nowrap" }}>
-        Use AI
-      </Button>
+
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <TextField
           label="Preview Text"

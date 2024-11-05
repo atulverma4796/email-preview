@@ -1,85 +1,100 @@
-import React from "react"
-import { TextField, IconButton, Tooltip, Box, Button } from "@mui/material"
-import { Person, Info } from "@mui/icons-material"
-import { useDispatch, useSelector } from "react-redux"
-import {
-  updateSubject1,
-  updateSubject2,
-  updatePreviewText,
-} from "../store/emailSlice"
+import React, { useState, useEffect } from "react"
+import { useSelector } from "react-redux"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
 
 function PreviewPanel() {
-  const dispatch = useDispatch()
+  const [currentTime, setCurrentTime] = useState("")
   const email = useSelector((state) => state.email)
 
-  const handleChange = (field, value) => {
-    if (field === "subject1") dispatch(updateSubject1(value))
-    else if (field === "subject2") dispatch(updateSubject2(value))
-    else if (field === "previewText") dispatch(updatePreviewText(value))
-  }
+  useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date()
+      const hours = now.getHours().toString().padStart(2, "0")
+      const minutes = now.getMinutes().toString().padStart(2, "0")
+      setCurrentTime(`${hours}:${minutes}`)
+    }
+
+    updateDateTime()
+    const timer = setInterval(updateDateTime, 60000)
+
+    return () => clearInterval(timer)
+  }, [])
 
   return (
-    <Box sx={{ padding: 2, display: "flex", flexDirection: "column", gap: 3 }}>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <TextField
-          label="Subject Line 1"
-          variant="outlined"
-          fullWidth
-          value={email.subject1}
-          onChange={(e) => handleChange("subject1", e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <Tooltip title="AI suggestion">
-                <IconButton>
-                  <Person color="primary" />
-                </IconButton>
-              </Tooltip>
-            ),
-          }}
-        />
+    <Box
+      sx={{
+        padding: 2,
+        borderRadius: "30px",
+        overflow: "hidden",
+        boxShadow: 5,
+        border: 1,
+        borderColor: "grey.300",
+        backgroundColor: "white",
+        width: "100%",
+        maxWidth: 300,
+        height: 500,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box
+        sx={{ padding: "8px", backgroundColor: "#f8f8f8", textAlign: "center" }}
+      >
+        <Typography variant="caption" color="textSecondary">
+          {currentTime}
+        </Typography>
       </Box>
-      <Button variant="outlined" sx={{ whiteSpace: "nowrap" }}>
-        Use AI
-      </Button>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <TextField
-          label="Subject Line 2"
-          variant="outlined"
-          fullWidth
-          value={email.subject2}
-          onChange={(e) => handleChange("subject2", e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <Tooltip title="AI suggestion">
-                <IconButton>
-                  <Person color="primary" />
-                </IconButton>
-              </Tooltip>
-            ),
+
+      <Box sx={{ padding: 2, flexGrow: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: 2,
           }}
-        />
+        >
+          <Typography variant="h6">Inbox</Typography>
+          <Typography variant="body2" color="textSecondary">
+            {currentTime}
+          </Typography>
+        </Box>
+
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+          <Typography
+            variant="body1"
+            sx={{ fontWeight: "bold", color: "primary.main" }}
+          >
+            {email.subject1 || "Sample Subject 1"}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {email.previewText || "Sample preview text for the email."}
+          </Typography>
+
+          <Typography
+            variant="body1"
+            sx={{ fontWeight: "bold", color: "secondary.main" }}
+          >
+            {email.subject2 || "Sample Subject 2"}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {email.previewText || "Another preview text sample."}
+          </Typography>
+        </Box>
       </Box>
-      <Button variant="outlined" sx={{ whiteSpace: "nowrap" }}>
-        Use AI
-      </Button>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <TextField
-          label="Preview Text"
-          variant="outlined"
-          fullWidth
-          value={email.previewText}
-          onChange={(e) => handleChange("previewText", e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <Tooltip title="Additional info">
-                <IconButton>
-                  <Info color="primary" />
-                </IconButton>
-              </Tooltip>
-            ),
-          }}
-        />
-      </Box>
+
+      <Typography
+        variant="caption"
+        sx={{
+          display: "block",
+          textAlign: "center",
+          padding: "8px",
+          color: "textSecondary",
+        }}
+      >
+        Actual email preview may vary depending on the email client.
+      </Typography>
     </Box>
   )
 }
