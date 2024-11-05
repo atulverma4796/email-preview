@@ -83,18 +83,6 @@ function PreviewPanel() {
           </Typography>
         </Box>
       </Box>
-
-      <Typography
-        variant="caption"
-        sx={{
-          display: "block",
-          textAlign: "center",
-          padding: "8px",
-          color: "textSecondary",
-        }}
-      >
-        Actual email preview may vary depending on the email client.
-      </Typography>
     </Box>
   )
 }
